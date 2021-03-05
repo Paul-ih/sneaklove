@@ -1,6 +1,8 @@
 require("dotenv").config();
 require("./../../config/mongo"); 
-const SneakerModel = require("./../../models/Sneaker");
+const SneakerModel = require("./../../models/Sneaker.js");
+
+// ARE THERE ANY MISSING FUNCTIONS OR DECLARATIONS HERE?
 
 const sneaker = [
     {
@@ -62,13 +64,20 @@ const sneaker = [
 
 
 
-// COPIED -- still need to update
-    (async function insertSneaker() {
-        try {
-          await SneakerModel.deleteMany(); // empty the styles db collection -- I DON'T THINK WE NEED THIS LINE
-          const inserted = await SneakerModel.insertMany(sneaker); // insert docs in db
-          console.log(`seed artists done : ${inserted.length} documents inserted !`);
-        } catch (err) {
-          console.error(err);
-        }
-      })();
+// COPIED -- DON'T KNOW WHICH FUNCTION TO USE YET
+
+      router.get("/", (req, res, next) => {
+        // ask to the Hacker model for the data
+        // every model function in mongoose are asynchronous
+        SneakerModel.find()
+          .then((dbRes) => {
+            res.render("dashboard_sneaker_row", {
+              sneakers: dbRes,
+            });
+          })
+          .catch((dbError) => {
+            next(dbError);
+          });
+      });
+
+module.exports = router;
