@@ -8,21 +8,22 @@ const app = express();
 const createError = require("http-errors");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
-const hbo = require("hbs");
+const hbs = require("hbs");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const dev_mode = false;
 const logger = require("morgan");
+const dotenv = require("dotenv").config()
 
 // config logger (pour debug)
 app.use(logger("dev"));
 
 // initial config
 app.set("view engine", "hbs");
-app.set("views", __dirname + "/view");
+app.set("views", __dirname + "/views");
 app.use(express.static("public"));
-hbs.registerPartials(__dirname + "/views/partials");
+hbs.registerPartials(__dirname + "/views/partial");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
